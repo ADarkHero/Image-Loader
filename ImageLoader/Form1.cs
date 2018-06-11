@@ -8,6 +8,7 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -32,7 +33,7 @@ namespace ImageLoader
         {
             checkAndAddEndingSlashes(); //If the webpath or folderpath is missing a / or \ at the end, it gets added here
 
-            WebClient myWebClient = new WebClient();
+            
 
             String missingFiles = "";
 
@@ -45,11 +46,14 @@ namespace ImageLoader
                 //Downloads images from the web
                 try
                 {
-                    myWebClient.DownloadFile(myStringWebResource, fileName);
+                    using(WebClient myWebClient = new WebClient()){
+                        myWebClient.DownloadFile(myStringWebResource, fileName);
+                    }   
                 }
                 catch (Exception ex)
                 {
-                    missingFiles += s + "\r\n";
+                    missingFiles += s + " \r\n";
+                    missingFiles += s + " \r\n";
                 }
             }
 

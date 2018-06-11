@@ -100,7 +100,7 @@
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(130, 20);
             this.button3.TabIndex = 6;
-            this.button3.Text = "Image folder";
+            this.button3.Text = "Download folder";
             this.button3.UseVisualStyleBackColor = true;
             // 
             // textBoxImageFolder
@@ -136,7 +136,7 @@
             this.openImageFolder.Name = "openImageFolder";
             this.openImageFolder.Size = new System.Drawing.Size(325, 23);
             this.openImageFolder.TabIndex = 10;
-            this.openImageFolder.Text = "Open image folder in explorer";
+            this.openImageFolder.Text = "Open download folder in explorer";
             this.openImageFolder.UseVisualStyleBackColor = true;
             this.openImageFolder.Click += new System.EventHandler(this.openImageFolder_Click);
             // 
