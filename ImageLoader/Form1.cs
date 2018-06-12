@@ -47,7 +47,8 @@ namespace ImageLoader
 
 
 
-        private void startProgram_Click(object sender, EventArgs e)
+        
+        private void mainMethod()
         {
             checkAndAddEndingSlashes(); //If the webpath or folderpath is missing a / or \ at the end, it gets added here
 
@@ -66,14 +67,9 @@ namespace ImageLoader
                 startProgram.BackColor = Color.Gold;
                 startProgram.Text = "Currently downloading. Click again to stop!";
             }
-            
+
             writeSettings();
         }
-
-
-
-
-
 
         private void downoadDataFromWeb()
         {
@@ -95,35 +91,46 @@ namespace ImageLoader
                 {
                     using (WebClient myWebClient = new WebClient())
                     {
-                        myWebClient.DownloadFile(myStringWebResource, fileName);
+                        myWebClient.DownloadFileCompleted += DownloadCompleted;
+                        myWebClient.DownloadFileAsync(new Uri(myStringWebResource), fileName);
 
                         foundFiles += s + "\r\n";
                     }
                 }
                 catch (Exception ex)
                 {
+                    MethodInvoker perfStep = new MethodInvoker(() => progressBar.PerformStep()); //Increase progressbar value
+                    progressBar.Invoke(perfStep);
                     missingFiles += s + " \r\n";
                 }
 
-                MethodInvoker perfStep = new MethodInvoker(() => progressBar.PerformStep()); //Increase progressbar value
-                progressBar.Invoke(perfStep);
+                
             }
 
+        }
+
+
+        private void DownloadCompleted(object sender, AsyncCompletedEventArgs e)
+        {
+            MethodInvoker perfStep = new MethodInvoker(() => progressBar.PerformStep()); //Increase progressbar value
+            progressBar.Invoke(perfStep);
+
+            //If the progress bar is at 100%: write logs to files and show a message box
+            if (progressBar.Value >= progressBar.Maximum)
+            {
+                showFinishedMessageAndWriteToLogFiles();
+            }
+        }
+
+
+
+        private void showFinishedMessageAndWriteToLogFiles()
+        {
             MethodInvoker dlFinishedCol = new MethodInvoker(() => startProgram.BackColor = Color.LimeGreen); //Change button color
             progressBar.Invoke(dlFinishedCol);
             MethodInvoker dlFinished = new MethodInvoker(() => startProgram.Text = "Download finished!"); //Change button text
             progressBar.Invoke(dlFinished);
 
-            writeLogsToFile();
-        }
-
-
-
-
-
-
-        private void writeLogsToFile()
-        {
             //If some file were not found, write them to error log
             if (String.IsNullOrEmpty(missingFiles))
             {
@@ -253,7 +260,13 @@ namespace ImageLoader
 
         private void progressBar_Click(object sender, EventArgs e)
         {
-
+            mainMethod();
         }
+
+        private void startProgram_Click(object sender, EventArgs e)
+        {
+            mainMethod();
+        }
+
     }
 }
