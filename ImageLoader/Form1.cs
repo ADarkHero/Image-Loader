@@ -20,6 +20,10 @@ namespace ImageLoader
         string logFile = "error.log";
         string foundLog = "found.log";
 
+        String missingFiles = "";
+        String foundFiles = "";
+        Thread myThread;
+
         public Form1()
         {
             InitializeComponent();
@@ -28,17 +32,34 @@ namespace ImageLoader
         private void Form1_Load(object sender, EventArgs e)
         {
             readSettings();
+            myThread = new System.Threading.Thread(new ThreadStart(downoadDataFromWeb));
         }
 
         private void startProgram_Click(object sender, EventArgs e)
         {
             checkAndAddEndingSlashes(); //If the webpath or folderpath is missing a / or \ at the end, it gets added here
 
+            //If the thread is running, end it. If it is not running, start it.
+            if (myThread.IsAlive)
+            {
+                myThread.Interrupt();
+                myThread.Abort();
+                startProgram.BackColor = Color.Red;
+                startProgram.Text = "Download aborted! Click again to restart.";
+            }
+            else
+            {
+                myThread = new System.Threading.Thread(new ThreadStart(downoadDataFromWeb));
+                myThread.Start();
+                startProgram.BackColor = Color.Gold;
+                startProgram.Text = "Currently downloading. Click again to stop!";
+            }
             
+            writeSettings();
+        }
 
-            String missingFiles = "";
-            String foundFiles = "";
-
+        private void downoadDataFromWeb()
+        {
             string[] readText = File.ReadAllLines(textBoxFilepath.Text);
             foreach (string s in readText)
             {
@@ -48,18 +69,29 @@ namespace ImageLoader
                 //Downloads images from the web
                 try
                 {
-                    using(WebClient myWebClient = new WebClient()){
+                    using (WebClient myWebClient = new WebClient())
+                    {
                         myWebClient.DownloadFile(myStringWebResource, fileName);
 
                         foundFiles += s + "\r\n";
-                    }   
+                    }
                 }
                 catch (Exception ex)
                 {
                     missingFiles += s + " \r\n";
                 }
+
+                Console.WriteLine(myStringWebResource);
             }
 
+            startProgram.BackColor = Color.LimeGreen;
+            startProgram.Text = "Download finished!";
+
+            writeLogsToFile();
+        }
+
+        private void writeLogsToFile()
+        {
             //If some file were not found, write them to error log
             if (String.IsNullOrEmpty(missingFiles))
             {
@@ -75,9 +107,6 @@ namespace ImageLoader
             File.AppendAllText(foundLog, foundFiles);
             File.AppendAllText(foundLog, "\r\n");
             File.AppendAllText(foundLog, "\r\n");
-
-
-            writeSettings();
         }
 
         private void checkAndAddEndingSlashes()
