@@ -29,11 +29,23 @@ namespace ImageLoader
             InitializeComponent();
         }
 
+
+
+
+
+
         private void Form1_Load(object sender, EventArgs e)
         {
             readSettings();
             myThread = new System.Threading.Thread(new ThreadStart(downoadDataFromWeb));
         }
+
+
+
+
+
+
+
 
         private void startProgram_Click(object sender, EventArgs e)
         {
@@ -58,9 +70,21 @@ namespace ImageLoader
             writeSettings();
         }
 
+
+
+
+
+
         private void downoadDataFromWeb()
         {
             string[] readText = File.ReadAllLines(textBoxFilepath.Text);
+
+            MethodInvoker resetProgress = new MethodInvoker(() => progressBar.Value = 0); //Reset the progressbar to zero
+            progressBar.Invoke(resetProgress);
+
+            MethodInvoker setMaximum = new MethodInvoker(() => progressBar.Maximum = readText.Length); //How many lines does the document have? -> Maximum value for progress-bar
+            progressBar.Invoke(setMaximum);
+
             foreach (string s in readText)
             {
                 string myStringWebResource = textBoxWebpath.Text + s; //Source (web) path
@@ -81,14 +105,22 @@ namespace ImageLoader
                     missingFiles += s + " \r\n";
                 }
 
-                Console.WriteLine(myStringWebResource);
+                MethodInvoker perfStep = new MethodInvoker(() => progressBar.PerformStep()); //Increase progressbar value
+                progressBar.Invoke(perfStep);
             }
 
-            startProgram.BackColor = Color.LimeGreen;
-            startProgram.Text = "Download finished!";
+            MethodInvoker dlFinishedCol = new MethodInvoker(() => startProgram.BackColor = Color.LimeGreen); //Change button color
+            progressBar.Invoke(dlFinishedCol);
+            MethodInvoker dlFinished = new MethodInvoker(() => startProgram.Text = "Download finished!"); //Change button text
+            progressBar.Invoke(dlFinished);
 
             writeLogsToFile();
         }
+
+
+
+
+
 
         private void writeLogsToFile()
         {
@@ -109,6 +141,9 @@ namespace ImageLoader
             File.AppendAllText(foundLog, "\r\n");
         }
 
+
+
+
         private void checkAndAddEndingSlashes()
         {
             if (!textBoxWebpath.Text.EndsWith("/"))
@@ -117,6 +152,11 @@ namespace ImageLoader
             if (!textBoxImageFolder.Text.EndsWith("\\"))
                 textBoxImageFolder.Text = textBoxImageFolder.Text + "\\";
         }
+
+
+
+
+
 
         private void readSettings()
         {
@@ -127,6 +167,9 @@ namespace ImageLoader
                 textBoxImageFolder.Text = readText[2];
             }
         }
+
+
+
 
         private void writeSettings()
         {
@@ -161,6 +204,8 @@ namespace ImageLoader
             }    
         }
 
+
+
         private void openErrorLog_Click(object sender, EventArgs e)
         {
             try
@@ -172,6 +217,10 @@ namespace ImageLoader
 
             }
         }
+
+
+
+
 
         private void openImageFolder_Click(object sender, EventArgs e)
         {
@@ -185,6 +234,8 @@ namespace ImageLoader
             }
         }
 
+
+
         private void openSuccessLog_Click(object sender, EventArgs e)
         {
             try
@@ -195,6 +246,14 @@ namespace ImageLoader
             {
 
             }
+        }
+
+
+
+
+        private void progressBar_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
