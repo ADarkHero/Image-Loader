@@ -320,6 +320,9 @@ namespace ImageLoader
             mainMethod();
         }
 
+
+
+
         /// <summary>
         /// If you click the start button, the main method starts.
         /// </summary>
@@ -328,5 +331,35 @@ namespace ImageLoader
             mainMethod();
         }
 
+
+
+
+        /// <summary>
+        /// These methods display help messages for the user, if they click the help-buttons.
+        /// </summary>
+        private void button1_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("Declare the base path of the webpage, where you want to download files from, here.\r\n\r\n" +
+                "For example:\r\n" +
+                "http://www.google.com/");
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("Declare the filelist, you want to use, here.\r\n" +
+                "Click the three dots, to open a file-browse-dialog and choose the file this way.\r\n" +
+                "The file list ist a txt/csv file, where every entry is seperated by an enter. You must not put additional information in the filelist.\r\n\r\n" +
+                "" +
+                "A file list could look like this:\r\n" +
+                "test01.jpg\r\n" +
+                "test02.jpg\r\n" +
+                "test.03\r\n");
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("Declare the folder, where the program should download the files to.\r\n" +
+                 "Click the three dots, to open a file-browse-dialog and choose the folder this way.");
+        }
     }
 }
