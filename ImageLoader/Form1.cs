@@ -18,6 +18,7 @@ namespace ImageLoader
     {
         string settingsFile = "settings.txt";
         string logFile = "error.log";
+        string foundLog = "found.log";
 
         public Form1()
         {
@@ -36,6 +37,7 @@ namespace ImageLoader
             
 
             String missingFiles = "";
+            String foundFiles = "";
 
             string[] readText = File.ReadAllLines(textBoxFilepath.Text);
             foreach (string s in readText)
@@ -48,11 +50,12 @@ namespace ImageLoader
                 {
                     using(WebClient myWebClient = new WebClient()){
                         myWebClient.DownloadFile(myStringWebResource, fileName);
+
+                        foundFiles += s + "\r\n";
                     }   
                 }
                 catch (Exception ex)
                 {
-                    missingFiles += s + " \r\n";
                     missingFiles += s + " \r\n";
                 }
             }
@@ -67,8 +70,12 @@ namespace ImageLoader
                 MessageBox.Show("There where some file that couldn't be downloaded! Take a look at the error log.");
                 File.AppendAllText(logFile, missingFiles);
                 File.AppendAllText(logFile, "\r\n");
+                File.AppendAllText(logFile, "\r\n");
             }
-            
+            File.AppendAllText(foundLog, foundFiles);
+            File.AppendAllText(foundLog, "\r\n");
+            File.AppendAllText(foundLog, "\r\n");
+
 
             writeSettings();
         }
@@ -127,12 +134,38 @@ namespace ImageLoader
 
         private void openErrorLog_Click(object sender, EventArgs e)
         {
-            Process.Start("error.log");
+            try
+            {
+                Process.Start(logFile);
+            }
+            catch (Exception ex)
+            {
+
+            }
         }
 
         private void openImageFolder_Click(object sender, EventArgs e)
         {
-            Process.Start(textBoxImageFolder.Text);
+            try
+            {
+                Process.Start(textBoxImageFolder.Text);
+            }
+            catch (Exception ex)
+            {
+
+            }
+        }
+
+        private void openSuccessLog_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                Process.Start(foundLog);
+            }
+            catch(Exception ex)
+            {
+
+            }
         }
     }
 }

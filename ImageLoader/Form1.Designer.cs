@@ -39,6 +39,7 @@
             this.chooseImageFolder = new System.Windows.Forms.Button();
             this.openErrorLog = new System.Windows.Forms.Button();
             this.openImageFolder = new System.Windows.Forms.Button();
+            this.openSuccessLog = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // textBoxWebpath
@@ -122,9 +123,9 @@
             // 
             // openErrorLog
             // 
-            this.openErrorLog.Location = new System.Drawing.Point(367, 162);
+            this.openErrorLog.Location = new System.Drawing.Point(542, 161);
             this.openErrorLog.Name = "openErrorLog";
-            this.openErrorLog.Size = new System.Drawing.Size(325, 23);
+            this.openErrorLog.Size = new System.Drawing.Size(150, 23);
             this.openErrorLog.TabIndex = 9;
             this.openErrorLog.Text = "Open error log";
             this.openErrorLog.UseVisualStyleBackColor = true;
@@ -140,11 +141,22 @@
             this.openImageFolder.UseVisualStyleBackColor = true;
             this.openImageFolder.Click += new System.EventHandler(this.openImageFolder_Click);
             // 
+            // openSuccessLog
+            // 
+            this.openSuccessLog.Location = new System.Drawing.Point(386, 161);
+            this.openSuccessLog.Name = "openSuccessLog";
+            this.openSuccessLog.Size = new System.Drawing.Size(150, 23);
+            this.openSuccessLog.TabIndex = 11;
+            this.openSuccessLog.Text = "Open success log";
+            this.openSuccessLog.UseVisualStyleBackColor = true;
+            this.openSuccessLog.Click += new System.EventHandler(this.openSuccessLog_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(704, 197);
+            this.Controls.Add(this.openSuccessLog);
             this.Controls.Add(this.openImageFolder);
             this.Controls.Add(this.openErrorLog);
             this.Controls.Add(this.chooseImageFolder);
@@ -177,6 +189,7 @@
         private System.Windows.Forms.Button chooseImageFolder;
         private System.Windows.Forms.Button openErrorLog;
         private System.Windows.Forms.Button openImageFolder;
+        private System.Windows.Forms.Button openSuccessLog;
     }
 }
 
