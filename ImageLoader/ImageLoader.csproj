@@ -48,10 +48,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestCertificateThumbprint>F0FD2D266290AF70E5121BCA1760918A974AD6B9</ManifestCertificateThumbprint>
+    <ManifestCertificateThumbprint>4408678FC61DA9A8001BAE155762EE57BD008FDE</ManifestCertificateThumbprint>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestKeyFile>ImageLoader_TemporaryKey.pfx</ManifestKeyFile>
+    <ManifestKeyFile>ImageLoader_1_TemporaryKey.pfx</ManifestKeyFile>
   </PropertyGroup>
   <PropertyGroup>
     <GenerateManifests>true</GenerateManifests>
