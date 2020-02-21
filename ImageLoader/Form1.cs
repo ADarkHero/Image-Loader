@@ -42,8 +42,11 @@ namespace ImageLoader
 			string[] readText = File.ReadAllLines(textBoxFilepath.Text);
 			foreach (string s in readText)
 			{
-				string myStringWebResource = textBoxWebpath.Text + s; //Source (web) path
-				string fileName = textBoxImageFolder.Text + s; //Destination path
+				string fileName = s.Substring(0, s.IndexOf(";")); //Cut everything after ; - We can work better with csv files that way.
+				fileName = CheckForExtensions(fileName);
+
+				string myStringWebResource = textBoxWebpath.Text + fileName; //Source (web) path
+				string fileNamePath = textBoxImageFolder.Text + fileName; //Destination path
 
 				ServicePointManager.SecurityProtocol = (SecurityProtocolType)3072; //TLS 1.2
 
@@ -52,14 +55,14 @@ namespace ImageLoader
 				{
 					using (WebClient myWebClient = new WebClient())
 					{
-						myWebClient.DownloadFile(myStringWebResource, fileName);
+						myWebClient.DownloadFile(myStringWebResource, fileNamePath);
 
-						foundFiles += s + "\r\n";
+						foundFiles += fileName + "\r\n";
 					}
 				}
 				catch (Exception ex)
 				{
-					missingFiles += s + " \r\n";
+					missingFiles += fileName + ";" + ex.ToString() + "\r\n";
 				}
 			}
 
@@ -81,6 +84,20 @@ namespace ImageLoader
 
 
 			writeSettings();
+		}
+
+		/// <summary>
+		/// Checks if the filename contains a file extension. If not, add .jpg.
+		/// </summary>
+		/// <param name="fileName">The filename, that should be checked.</param>
+		/// <returns>If the filename contains a dot, return it unchanged. If not, return it with a .jpg at the end.</returns>
+		private string CheckForExtensions(string fileName)
+		{
+			if (!fileName.Contains("."))
+			{
+				return fileName + ".jpg";
+			}
+			return fileName;
 		}
 
 		private void checkAndAddEndingSlashes()
@@ -121,6 +138,7 @@ namespace ImageLoader
 			if (openFileDialog.ShowDialog() == DialogResult.OK)
 			{
 				textBoxFilepath.Text = openFileDialog.InitialDirectory + openFileDialog.FileName;
+				writeSettings();
 			}
 		}
 
@@ -133,6 +151,7 @@ namespace ImageLoader
 			if (objResult == DialogResult.OK)
 			{
 				textBoxImageFolder.Text = objDialog.SelectedPath;
+				writeSettings();
 			}
 		}
 
@@ -144,7 +163,7 @@ namespace ImageLoader
 			}
 			catch (Exception ex)
 			{
-
+				File.AppendAllText(logFile, ex.ToString());
 			}
 		}
 
@@ -156,7 +175,7 @@ namespace ImageLoader
 			}
 			catch (Exception ex)
 			{
-
+				File.AppendAllText(logFile, ex.ToString());
 			}
 		}
 
@@ -168,7 +187,7 @@ namespace ImageLoader
 			}
 			catch (Exception ex)
 			{
-
+				File.AppendAllText(logFile, ex.ToString());
 			}
 		}
 
@@ -181,7 +200,7 @@ namespace ImageLoader
 			}
 			catch (Exception ex)
 			{
-
+				File.AppendAllText(logFile, ex.ToString());
 			}
 		}
 	}
