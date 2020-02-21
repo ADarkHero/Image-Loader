@@ -65,6 +65,7 @@ namespace ImageLoader
 				//Sets maximum value of the progress bar
 				Invoke(new Action(() =>
 				{
+					progressBar1.Value = 0;
 					progressBar1.Maximum = lineCount;
 				}));
 
