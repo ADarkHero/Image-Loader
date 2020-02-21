@@ -34,6 +34,11 @@ namespace ImageLoader
 		{
 			Thread t = new Thread(delegate ()
 			{
+				if (checkBoxClearLogs.Checked)
+				{
+					clearAllLogs();
+				}
+
 				checkAndAddEndingSlashes(); //If the webpath or folderpath is missing a / or \ at the end, it gets added here
 
 
@@ -51,15 +56,24 @@ namespace ImageLoader
 				}));
 
 
+				//Use TLS, if the address contains https
+				if (textBoxWebpath.Text.Contains("https"))
+				{
+					ServicePointManager.SecurityProtocol = (SecurityProtocolType)3072; //TLS 1.2
+				}
+
+				//Read all filenames and try to download them
 				foreach (string s in readText)
 				{
 					string fileName = s.Substring(0, s.IndexOf(";")); //Cut everything after ; - We can work better with csv files that way.
-					fileName = CheckForExtensions(fileName);
+
+					if (checkBoxAddJpg.Checked)
+					{
+						fileName = CheckForExtensions(fileName);
+					}
 
 					string myStringWebResource = textBoxWebpath.Text + fileName; //Source (web) path
-					string fileNamePath = textBoxImageFolder.Text + fileName; //Destination path
-
-					ServicePointManager.SecurityProtocol = (SecurityProtocolType)3072; //TLS 1.2
+					string fileNamePath = textBoxImageFolder.Text + fileName; //Destination path		
 
 					//Downloads images from the web
 					try
@@ -136,6 +150,8 @@ namespace ImageLoader
 				textBoxWebpath.Text = readText[0];
 				textBoxFilepath.Text = readText[1];
 				textBoxImageFolder.Text = readText[2];
+				checkBoxClearLogs.Checked = Convert.ToBoolean(readText[3]);
+				checkBoxAddJpg.Checked = Convert.ToBoolean(readText[4]);
 			}
 		}
 
@@ -146,6 +162,10 @@ namespace ImageLoader
 			File.AppendAllText("settings.txt", textBoxFilepath.Text);
 			File.AppendAllText("settings.txt", "\r\n");
 			File.AppendAllText("settings.txt", textBoxImageFolder.Text);
+			File.AppendAllText("settings.txt", "\r\n");
+			File.AppendAllText("settings.txt", checkBoxClearLogs.Checked.ToString());
+			File.AppendAllText("settings.txt", "\r\n");
+			File.AppendAllText("settings.txt", checkBoxAddJpg.Checked.ToString());
 		}
 
 
@@ -212,6 +232,10 @@ namespace ImageLoader
 
 		private void clearLogs_Click(object sender, EventArgs e)
 		{
+			clearAllLogs();
+		}
+		public void clearAllLogs()
+		{
 			try
 			{
 				File.WriteAllText(logFile, String.Empty);
@@ -221,6 +245,16 @@ namespace ImageLoader
 			{
 				File.AppendAllText(logFile, ex.ToString());
 			}
+		}
+
+		private void checkBoxClearLogs_CheckedChanged(object sender, EventArgs e)
+		{
+			writeSettings();
+		}
+
+		private void checkBoxAddJpg_CheckedChanged(object sender, EventArgs e)
+		{
+			writeSettings();
 		}
 	}
 }

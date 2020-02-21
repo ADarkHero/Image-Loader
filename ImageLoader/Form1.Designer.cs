@@ -42,6 +42,8 @@
 			this.openSuccessLog = new System.Windows.Forms.Button();
 			this.clearLogs = new System.Windows.Forms.Button();
 			this.progressBar1 = new System.Windows.Forms.ProgressBar();
+			this.checkBoxClearLogs = new System.Windows.Forms.CheckBox();
+			this.checkBoxAddJpg = new System.Windows.Forms.CheckBox();
 			this.SuspendLayout();
 			// 
 			// textBoxWebpath
@@ -89,7 +91,7 @@
 			// startProgram
 			// 
 			this.startProgram.BackColor = System.Drawing.Color.ForestGreen;
-			this.startProgram.Location = new System.Drawing.Point(12, 114);
+			this.startProgram.Location = new System.Drawing.Point(12, 158);
 			this.startProgram.Name = "startProgram";
 			this.startProgram.Size = new System.Drawing.Size(680, 80);
 			this.startProgram.TabIndex = 5;
@@ -125,7 +127,7 @@
 			// 
 			// openErrorLog
 			// 
-			this.openErrorLog.Location = new System.Drawing.Point(541, 279);
+			this.openErrorLog.Location = new System.Drawing.Point(541, 307);
 			this.openErrorLog.Name = "openErrorLog";
 			this.openErrorLog.Size = new System.Drawing.Size(150, 23);
 			this.openErrorLog.TabIndex = 9;
@@ -135,7 +137,7 @@
 			// 
 			// openImageFolder
 			// 
-			this.openImageFolder.Location = new System.Drawing.Point(12, 279);
+			this.openImageFolder.Location = new System.Drawing.Point(12, 307);
 			this.openImageFolder.Name = "openImageFolder";
 			this.openImageFolder.Size = new System.Drawing.Size(325, 49);
 			this.openImageFolder.TabIndex = 10;
@@ -145,7 +147,7 @@
 			// 
 			// openSuccessLog
 			// 
-			this.openSuccessLog.Location = new System.Drawing.Point(385, 279);
+			this.openSuccessLog.Location = new System.Drawing.Point(385, 307);
 			this.openSuccessLog.Name = "openSuccessLog";
 			this.openSuccessLog.Size = new System.Drawing.Size(150, 23);
 			this.openSuccessLog.TabIndex = 11;
@@ -155,7 +157,7 @@
 			// 
 			// clearLogs
 			// 
-			this.clearLogs.Location = new System.Drawing.Point(385, 304);
+			this.clearLogs.Location = new System.Drawing.Point(385, 332);
 			this.clearLogs.Name = "clearLogs";
 			this.clearLogs.Size = new System.Drawing.Size(306, 23);
 			this.clearLogs.TabIndex = 12;
@@ -165,16 +167,40 @@
 			// 
 			// progressBar1
 			// 
-			this.progressBar1.Location = new System.Drawing.Point(13, 201);
+			this.progressBar1.Location = new System.Drawing.Point(13, 245);
 			this.progressBar1.Name = "progressBar1";
 			this.progressBar1.Size = new System.Drawing.Size(679, 23);
 			this.progressBar1.TabIndex = 13;
+			// 
+			// checkBoxClearLogs
+			// 
+			this.checkBoxClearLogs.AutoSize = true;
+			this.checkBoxClearLogs.Location = new System.Drawing.Point(13, 92);
+			this.checkBoxClearLogs.Name = "checkBoxClearLogs";
+			this.checkBoxClearLogs.Size = new System.Drawing.Size(160, 17);
+			this.checkBoxClearLogs.TabIndex = 14;
+			this.checkBoxClearLogs.Text = "Clear logs before every start.";
+			this.checkBoxClearLogs.UseVisualStyleBackColor = true;
+			this.checkBoxClearLogs.CheckedChanged += new System.EventHandler(this.checkBoxClearLogs_CheckedChanged);
+			// 
+			// checkBoxAddJpg
+			// 
+			this.checkBoxAddJpg.AutoSize = true;
+			this.checkBoxAddJpg.Location = new System.Drawing.Point(13, 116);
+			this.checkBoxAddJpg.Name = "checkBoxAddJpg";
+			this.checkBoxAddJpg.Size = new System.Drawing.Size(192, 17);
+			this.checkBoxAddJpg.TabIndex = 15;
+			this.checkBoxAddJpg.Text = "Add .jpg if there is no file extension.";
+			this.checkBoxAddJpg.UseVisualStyleBackColor = true;
+			this.checkBoxAddJpg.CheckedChanged += new System.EventHandler(this.checkBoxAddJpg_CheckedChanged);
 			// 
 			// Form1
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(704, 340);
+			this.ClientSize = new System.Drawing.Size(704, 367);
+			this.Controls.Add(this.checkBoxAddJpg);
+			this.Controls.Add(this.checkBoxClearLogs);
 			this.Controls.Add(this.progressBar1);
 			this.Controls.Add(this.clearLogs);
 			this.Controls.Add(this.openSuccessLog);
@@ -213,5 +239,7 @@
 		private System.Windows.Forms.Button openSuccessLog;
 		private System.Windows.Forms.Button clearLogs;
 		private System.Windows.Forms.ProgressBar progressBar1;
+		private System.Windows.Forms.CheckBox checkBoxClearLogs;
+		private System.Windows.Forms.CheckBox checkBoxAddJpg;
 	}
 }
