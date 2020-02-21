@@ -20,16 +20,29 @@ namespace ImageLoader
 		string logFile = "error.log";
 		string foundLog = "found.log";
 
+		/// <summary>
+		/// Initialize form.
+		/// </summary>
 		public Form1()
 		{
 			InitializeComponent();
 		}
 
+		/// <summary>
+		/// Read settings on startup.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private void Form1_Load(object sender, EventArgs e)
 		{
 			readSettings();
 		}
 
+		/// <summary>
+		/// The primary function of this program. Download files based on a list.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private void startProgram_Click(object sender, EventArgs e)
 		{
 			Thread t = new Thread(delegate ()
@@ -133,6 +146,9 @@ namespace ImageLoader
 			return fileName;
 		}
 
+		/// <summary>
+		/// Adds slashes to web path and image folder, if they are missing.
+		/// </summary>
 		private void checkAndAddEndingSlashes()
 		{
 			if (!textBoxWebpath.Text.EndsWith("/"))
@@ -142,6 +158,9 @@ namespace ImageLoader
 				textBoxImageFolder.Text = textBoxImageFolder.Text + "\\";
 		}
 
+		/// <summary>
+		/// Reads settings from txt file.
+		/// </summary>
 		private void readSettings()
 		{
 			if (File.Exists(settingsFile))
@@ -155,6 +174,9 @@ namespace ImageLoader
 			}
 		}
 
+		/// <summary>
+		/// Writes settings to txt file.
+		/// </summary>
 		private void writeSettings()
 		{
 			File.WriteAllText("settings.txt", textBoxWebpath.Text);
@@ -169,7 +191,11 @@ namespace ImageLoader
 		}
 
 
-
+		/// <summary>
+		/// Opens a dialog, which lets the user choose their filepath.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private void chooseFilePath_Click(object sender, EventArgs e)
 		{
 			OpenFileDialog openFileDialog = new OpenFileDialog();
@@ -182,7 +208,11 @@ namespace ImageLoader
 		}
 
 
-
+		/// <summary>
+		/// Opens a dialog, which lets the user choose their image folder.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private void chooseImageFolder_Click(object sender, EventArgs e)
 		{
 			FolderBrowserDialog objDialog = new FolderBrowserDialog();
@@ -194,6 +224,11 @@ namespace ImageLoader
 			}
 		}
 
+		/// <summary>
+		/// Opens the error log.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private void openErrorLog_Click(object sender, EventArgs e)
 		{
 			try
@@ -206,6 +241,11 @@ namespace ImageLoader
 			}
 		}
 
+		/// <summary>
+		/// Opens the image folder.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private void openImageFolder_Click(object sender, EventArgs e)
 		{
 			try
@@ -218,6 +258,11 @@ namespace ImageLoader
 			}
 		}
 
+		/// <summary>
+		/// Opens the success log.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private void openSuccessLog_Click(object sender, EventArgs e)
 		{
 			try
@@ -230,6 +275,11 @@ namespace ImageLoader
 			}
 		}
 
+		/// <summary>
+		/// Clears all logs.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private void clearLogs_Click(object sender, EventArgs e)
 		{
 			clearAllLogs();
@@ -247,11 +297,21 @@ namespace ImageLoader
 			}
 		}
 
+		/// <summary>
+		/// Writes the settings, if the clearlogs checkbox was changed.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private void checkBoxClearLogs_CheckedChanged(object sender, EventArgs e)
 		{
 			writeSettings();
 		}
 
+		/// <summary>
+		/// Writes the settings, if the add jpg checkbox was changed.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private void checkBoxAddJpg_CheckedChanged(object sender, EventArgs e)
 		{
 			writeSettings();
