@@ -171,5 +171,18 @@ namespace ImageLoader
 
 			}
 		}
+
+		private void clearLogs_Click(object sender, EventArgs e)
+		{
+			try
+			{
+				File.WriteAllText(logFile, String.Empty);
+				File.WriteAllText(foundLog, String.Empty);
+			}
+			catch (Exception ex)
+			{
+
+			}
+		}
 	}
 }

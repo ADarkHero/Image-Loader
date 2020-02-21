@@ -40,6 +40,7 @@
 			this.openErrorLog = new System.Windows.Forms.Button();
 			this.openImageFolder = new System.Windows.Forms.Button();
 			this.openSuccessLog = new System.Windows.Forms.Button();
+			this.clearLogs = new System.Windows.Forms.Button();
 			this.SuspendLayout();
 			// 
 			// textBoxWebpath
@@ -135,7 +136,7 @@
 			// 
 			this.openImageFolder.Location = new System.Drawing.Point(13, 161);
 			this.openImageFolder.Name = "openImageFolder";
-			this.openImageFolder.Size = new System.Drawing.Size(325, 23);
+			this.openImageFolder.Size = new System.Drawing.Size(325, 49);
 			this.openImageFolder.TabIndex = 10;
 			this.openImageFolder.Text = "Open download folder in explorer";
 			this.openImageFolder.UseVisualStyleBackColor = true;
@@ -151,11 +152,22 @@
 			this.openSuccessLog.UseVisualStyleBackColor = true;
 			this.openSuccessLog.Click += new System.EventHandler(this.openSuccessLog_Click);
 			// 
+			// clearLogs
+			// 
+			this.clearLogs.Location = new System.Drawing.Point(386, 186);
+			this.clearLogs.Name = "clearLogs";
+			this.clearLogs.Size = new System.Drawing.Size(306, 23);
+			this.clearLogs.TabIndex = 12;
+			this.clearLogs.Text = "Clear Logs";
+			this.clearLogs.UseVisualStyleBackColor = true;
+			this.clearLogs.Click += new System.EventHandler(this.clearLogs_Click);
+			// 
 			// Form1
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(704, 197);
+			this.ClientSize = new System.Drawing.Size(704, 222);
+			this.Controls.Add(this.clearLogs);
 			this.Controls.Add(this.openSuccessLog);
 			this.Controls.Add(this.openImageFolder);
 			this.Controls.Add(this.openErrorLog);
@@ -190,5 +202,6 @@
 		private System.Windows.Forms.Button openErrorLog;
 		private System.Windows.Forms.Button openImageFolder;
 		private System.Windows.Forms.Button openSuccessLog;
+		private System.Windows.Forms.Button clearLogs;
 	}
 }
