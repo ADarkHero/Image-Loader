@@ -32,58 +32,77 @@ namespace ImageLoader
 
 		private void startProgram_Click(object sender, EventArgs e)
 		{
-			checkAndAddEndingSlashes(); //If the webpath or folderpath is missing a / or \ at the end, it gets added here
-
-
-
-			String missingFiles = "";
-			String foundFiles = "";
-
-			string[] readText = File.ReadAllLines(textBoxFilepath.Text);
-			foreach (string s in readText)
+			Thread t = new Thread(delegate ()
 			{
-				string fileName = s.Substring(0, s.IndexOf(";")); //Cut everything after ; - We can work better with csv files that way.
-				fileName = CheckForExtensions(fileName);
+				checkAndAddEndingSlashes(); //If the webpath or folderpath is missing a / or \ at the end, it gets added here
 
-				string myStringWebResource = textBoxWebpath.Text + fileName; //Source (web) path
-				string fileNamePath = textBoxImageFolder.Text + fileName; //Destination path
 
-				ServicePointManager.SecurityProtocol = (SecurityProtocolType)3072; //TLS 1.2
 
-				//Downloads images from the web
-				try
+				String missingFiles = "";
+				String foundFiles = "";
+
+				string[] readText = File.ReadAllLines(textBoxFilepath.Text);
+				int lineCount = readText.Count();
+
+				//Sets maximum value of the progress bar
+				Invoke(new Action(() =>
 				{
-					using (WebClient myWebClient = new WebClient())
+					progressBar1.Maximum = lineCount;
+				}));
+
+
+				foreach (string s in readText)
+				{
+					string fileName = s.Substring(0, s.IndexOf(";")); //Cut everything after ; - We can work better with csv files that way.
+					fileName = CheckForExtensions(fileName);
+
+					string myStringWebResource = textBoxWebpath.Text + fileName; //Source (web) path
+					string fileNamePath = textBoxImageFolder.Text + fileName; //Destination path
+
+					ServicePointManager.SecurityProtocol = (SecurityProtocolType)3072; //TLS 1.2
+
+					//Downloads images from the web
+					try
 					{
-						myWebClient.DownloadFile(myStringWebResource, fileNamePath);
+						using (WebClient myWebClient = new WebClient())
+						{
+							myWebClient.DownloadFile(myStringWebResource, fileNamePath);
 
-						foundFiles += fileName + "\r\n";
+							foundFiles += fileName + "\r\n";
+						}
 					}
+					catch (Exception ex)
+					{
+						missingFiles += fileName + ";" + ex.ToString() + "\r\n";
+					}
+
+					//Increments progress bar
+					Invoke(new Action(() =>
+					{
+						progressBar1.Increment(1);
+					}));
 				}
-				catch (Exception ex)
+
+				//If some file were not found, write them to error log
+				if (String.IsNullOrEmpty(missingFiles))
 				{
-					missingFiles += fileName + ";" + ex.ToString() + "\r\n";
+					MessageBox.Show("Pictures got downloaded successfully!");
 				}
-			}
-
-			//If some file were not found, write them to error log
-			if (String.IsNullOrEmpty(missingFiles))
-			{
-				MessageBox.Show("Pictures got downloaded successfully!");
-			}
-			else
-			{
-				MessageBox.Show("There where some file that couldn't be downloaded! Take a look at the error log.");
-				File.AppendAllText(logFile, missingFiles);
-				File.AppendAllText(logFile, "\r\n");
-				File.AppendAllText(logFile, "\r\n");
-			}
-			File.AppendAllText(foundLog, foundFiles);
-			File.AppendAllText(foundLog, "\r\n");
-			File.AppendAllText(foundLog, "\r\n");
+				else
+				{
+					MessageBox.Show("There where some file that couldn't be downloaded! Take a look at the error log.");
+					File.AppendAllText(logFile, missingFiles);
+					File.AppendAllText(logFile, "\r\n");
+					File.AppendAllText(logFile, "\r\n");
+				}
+				File.AppendAllText(foundLog, foundFiles);
+				File.AppendAllText(foundLog, "\r\n");
+				File.AppendAllText(foundLog, "\r\n");
 
 
-			writeSettings();
+				writeSettings();
+			});
+			t.Start();
 		}
 
 		/// <summary>

@@ -41,6 +41,7 @@
 			this.openImageFolder = new System.Windows.Forms.Button();
 			this.openSuccessLog = new System.Windows.Forms.Button();
 			this.clearLogs = new System.Windows.Forms.Button();
+			this.progressBar1 = new System.Windows.Forms.ProgressBar();
 			this.SuspendLayout();
 			// 
 			// textBoxWebpath
@@ -88,9 +89,9 @@
 			// startProgram
 			// 
 			this.startProgram.BackColor = System.Drawing.Color.ForestGreen;
-			this.startProgram.Location = new System.Drawing.Point(12, 115);
+			this.startProgram.Location = new System.Drawing.Point(12, 114);
 			this.startProgram.Name = "startProgram";
-			this.startProgram.Size = new System.Drawing.Size(680, 40);
+			this.startProgram.Size = new System.Drawing.Size(680, 80);
 			this.startProgram.TabIndex = 5;
 			this.startProgram.Text = "START!";
 			this.startProgram.UseVisualStyleBackColor = false;
@@ -124,7 +125,7 @@
 			// 
 			// openErrorLog
 			// 
-			this.openErrorLog.Location = new System.Drawing.Point(542, 161);
+			this.openErrorLog.Location = new System.Drawing.Point(541, 279);
 			this.openErrorLog.Name = "openErrorLog";
 			this.openErrorLog.Size = new System.Drawing.Size(150, 23);
 			this.openErrorLog.TabIndex = 9;
@@ -134,7 +135,7 @@
 			// 
 			// openImageFolder
 			// 
-			this.openImageFolder.Location = new System.Drawing.Point(13, 161);
+			this.openImageFolder.Location = new System.Drawing.Point(12, 279);
 			this.openImageFolder.Name = "openImageFolder";
 			this.openImageFolder.Size = new System.Drawing.Size(325, 49);
 			this.openImageFolder.TabIndex = 10;
@@ -144,7 +145,7 @@
 			// 
 			// openSuccessLog
 			// 
-			this.openSuccessLog.Location = new System.Drawing.Point(386, 161);
+			this.openSuccessLog.Location = new System.Drawing.Point(385, 279);
 			this.openSuccessLog.Name = "openSuccessLog";
 			this.openSuccessLog.Size = new System.Drawing.Size(150, 23);
 			this.openSuccessLog.TabIndex = 11;
@@ -154,7 +155,7 @@
 			// 
 			// clearLogs
 			// 
-			this.clearLogs.Location = new System.Drawing.Point(386, 186);
+			this.clearLogs.Location = new System.Drawing.Point(385, 304);
 			this.clearLogs.Name = "clearLogs";
 			this.clearLogs.Size = new System.Drawing.Size(306, 23);
 			this.clearLogs.TabIndex = 12;
@@ -162,11 +163,19 @@
 			this.clearLogs.UseVisualStyleBackColor = true;
 			this.clearLogs.Click += new System.EventHandler(this.clearLogs_Click);
 			// 
+			// progressBar1
+			// 
+			this.progressBar1.Location = new System.Drawing.Point(13, 201);
+			this.progressBar1.Name = "progressBar1";
+			this.progressBar1.Size = new System.Drawing.Size(679, 23);
+			this.progressBar1.TabIndex = 13;
+			// 
 			// Form1
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(704, 222);
+			this.ClientSize = new System.Drawing.Size(704, 340);
+			this.Controls.Add(this.progressBar1);
 			this.Controls.Add(this.clearLogs);
 			this.Controls.Add(this.openSuccessLog);
 			this.Controls.Add(this.openImageFolder);
@@ -203,5 +212,6 @@
 		private System.Windows.Forms.Button openImageFolder;
 		private System.Windows.Forms.Button openSuccessLog;
 		private System.Windows.Forms.Button clearLogs;
+		private System.Windows.Forms.ProgressBar progressBar1;
 	}
 }
