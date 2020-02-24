@@ -152,11 +152,21 @@ namespace ImageLoader
 		/// </summary>
 		private void checkAndAddEndingSlashes()
 		{
-			if (!textBoxWebpath.Text.EndsWith("/"))
-				textBoxWebpath.Text = textBoxWebpath.Text + "/";
+			if (!textBoxWebpath.Text.EndsWith("/") && !String.IsNullOrEmpty(textBoxWebpath.Text))
+			{
+				Invoke(new Action(() =>
+				{
+					textBoxWebpath.Text = textBoxWebpath.Text + "/";
+				}));
+			}
 
-			if (!textBoxImageFolder.Text.EndsWith("\\"))
-				textBoxImageFolder.Text = textBoxImageFolder.Text + "\\";
+			if (!textBoxImageFolder.Text.EndsWith("\\") && !String.IsNullOrEmpty(textBoxImageFolder.Text))
+			{
+				Invoke(new Action(() =>
+				{
+					textBoxImageFolder.Text = textBoxImageFolder.Text + "\\";
+				}));
+			}
 		}
 
 		/// <summary>
