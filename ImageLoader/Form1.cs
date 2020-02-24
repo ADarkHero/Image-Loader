@@ -87,7 +87,7 @@ namespace ImageLoader
 					}
 
 					string myStringWebResource = textBoxWebpath.Text + fileName; //Source (web) path
-					string fileNamePath = textBoxImageFolder.Text + fileName; //Destination path		
+					string fileNamePath = textBoxImageFolder.Text + CheckFilepathForIllegalParameters(fileName); //Destination path		
 
 					//Downloads images from the web
 					try
@@ -114,7 +114,7 @@ namespace ImageLoader
 				//If some file were not found, write them to error log
 				if (String.IsNullOrEmpty(missingFiles))
 				{
-					MessageBox.Show("Pictures got downloaded successfully!");
+					MessageBox.Show("Files got downloaded successfully!");
 				}
 				else
 				{
@@ -131,6 +131,22 @@ namespace ImageLoader
 				writeSettings();
 			});
 			t.Start();
+		}
+
+		/// <summary>
+		/// Removes illegal characters from a file path.
+		/// Also lowers the paths length to 260 characters.
+		/// </summary>
+		/// <param name="Input">The input, that should be checked for illegal chars.</param>
+		/// <returns></returns>
+		private string CheckFilepathForIllegalParameters(string Input)
+		{
+			String path = System.Text.RegularExpressions.Regex.Replace(Input, @"[\\/:*?""<>|]", string.Empty);
+			if (path.Length > 248)
+			{
+				path = path.Substring(247);
+			}
+			return path;
 		}
 
 		/// <summary>
