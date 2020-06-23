@@ -79,15 +79,44 @@ namespace ImageLoader
 				//Read all filenames and try to download them
 				foreach (string s in readText)
 				{
-					string fileName = s.Substring(0, s.IndexOf(";")); //Cut everything after ; - We can work better with csv files that way.
+                    string fileName = "";
+                    if (s.Contains(";"))
+                    {
+                        fileName = s.Substring(0, s.IndexOf(";")); //Cut everything after ; - We can work better with csv files that way.
+                    }
+                    else
+                    {
+                        fileName = s;
+                    }
 
-					if (checkBoxAddJpg.Checked)
+					if (checkBoxAddJpgBefore.Checked)
 					{
 						fileName = CheckForExtensions(fileName);
 					}
 
-					string myStringWebResource = textBoxWebpath.Text + fileName; //Source (web) path
-					string fileNamePath = textBoxImageFolder.Text + CheckFilepathForIllegalParameters(fileName); //Destination path		
+                    //Wildcard, if the filename is not on the urls end
+                    string myStringWebResource = "";
+                    if (textBoxWebpath.Text.Contains("%%%")){
+                        myStringWebResource = textBoxWebpath.Text.Replace("%%%", fileName); //Source (web) path
+                    }
+                    else
+                    {
+                        myStringWebResource = textBoxWebpath.Text + fileName; //Source (web) path
+                    }
+
+                    //Add http, if it doesn't already start with it
+                    if (!myStringWebResource.StartsWith("http"))
+                    {
+                        myStringWebResource = "http://" + myStringWebResource;
+                    }
+
+                    //Add .jpg after download
+                    if (checkBoxAddJpgAfter.Checked)
+                    {
+                        fileName = fileName + ".jpg";
+                    }
+
+                    string fileNamePath = textBoxImageFolder.Text + CheckFilepathForIllegalParameters(fileName); //Destination path		
 
 					//Downloads images from the web
 					try
@@ -168,22 +197,22 @@ namespace ImageLoader
 		/// </summary>
 		private void checkAndAddEndingSlashes()
 		{
-			if (!textBoxWebpath.Text.EndsWith("/") && !String.IsNullOrEmpty(textBoxWebpath.Text))
-			{
-				Invoke(new Action(() =>
-				{
-					textBoxWebpath.Text = textBoxWebpath.Text + "/";
-				}));
-			}
+            if (!textBoxWebpath.Text.EndsWith("/") && !String.IsNullOrEmpty(textBoxWebpath.Text))
+            {
+                Invoke(new Action(() =>
+                {
+                    textBoxWebpath.Text = textBoxWebpath.Text + "/";
+                }));
+            }
 
-			if (!textBoxImageFolder.Text.EndsWith("\\") && !String.IsNullOrEmpty(textBoxImageFolder.Text))
-			{
-				Invoke(new Action(() =>
-				{
-					textBoxImageFolder.Text = textBoxImageFolder.Text + "\\";
-				}));
-			}
-		}
+            if (!textBoxImageFolder.Text.EndsWith("\\") && !String.IsNullOrEmpty(textBoxImageFolder.Text))
+            {
+                Invoke(new Action(() =>
+                {
+                    textBoxImageFolder.Text = textBoxImageFolder.Text + "\\";
+                }));
+            }
+        }
 
 		/// <summary>
 		/// Reads settings from txt file.
@@ -197,8 +226,9 @@ namespace ImageLoader
 				textBoxFilepath.Text = readText[1];
 				textBoxImageFolder.Text = readText[2];
 				checkBoxClearLogs.Checked = Convert.ToBoolean(readText[3]);
-				checkBoxAddJpg.Checked = Convert.ToBoolean(readText[4]);
-			}
+				checkBoxAddJpgBefore.Checked = Convert.ToBoolean(readText[4]);
+                checkBoxAddJpgAfter.Checked = Convert.ToBoolean(readText[5]);
+            }
 		}
 
 		/// <summary>
@@ -214,8 +244,10 @@ namespace ImageLoader
 			File.AppendAllText("settings.txt", "\r\n");
 			File.AppendAllText("settings.txt", checkBoxClearLogs.Checked.ToString());
 			File.AppendAllText("settings.txt", "\r\n");
-			File.AppendAllText("settings.txt", checkBoxAddJpg.Checked.ToString());
-		}
+			File.AppendAllText("settings.txt", checkBoxAddJpgBefore.Checked.ToString());
+            File.AppendAllText("settings.txt", "\r\n");
+            File.AppendAllText("settings.txt", checkBoxAddJpgAfter.Checked.ToString());
+        }
 
 
 		/// <summary>
@@ -351,7 +383,9 @@ namespace ImageLoader
         {
             MessageBox.Show("Declare the base path of the webpage, where you want to download files from, here.\r\n\r\n" +
                 "For example:\r\n" +
-                "http://www.google.com/");
+                "http://www.google.com/ \r\n\r\n" +
+                "You can use %%% as a wildcard, if the file name is not at the end of the webpage. For example:\r\n" +
+                "http://www.google.com/%%%/somethingElse");
         }
 
         private void button2_Click(object sender, EventArgs e)

@@ -43,7 +43,8 @@
             this.clearLogs = new System.Windows.Forms.Button();
             this.progressBar1 = new System.Windows.Forms.ProgressBar();
             this.checkBoxClearLogs = new System.Windows.Forms.CheckBox();
-            this.checkBoxAddJpg = new System.Windows.Forms.CheckBox();
+            this.checkBoxAddJpgBefore = new System.Windows.Forms.CheckBox();
+            this.checkBoxAddJpgAfter = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
             // textBoxWebpath
@@ -93,7 +94,7 @@
             // startProgram
             // 
             this.startProgram.BackColor = System.Drawing.Color.ForestGreen;
-            this.startProgram.Location = new System.Drawing.Point(12, 158);
+            this.startProgram.Location = new System.Drawing.Point(13, 161);
             this.startProgram.Name = "startProgram";
             this.startProgram.Size = new System.Drawing.Size(680, 80);
             this.startProgram.TabIndex = 5;
@@ -186,23 +187,34 @@
             this.checkBoxClearLogs.UseVisualStyleBackColor = true;
             this.checkBoxClearLogs.CheckedChanged += new System.EventHandler(this.checkBoxClearLogs_CheckedChanged);
             // 
-            // checkBoxAddJpg
+            // checkBoxAddJpgBefore
             // 
-            this.checkBoxAddJpg.AutoSize = true;
-            this.checkBoxAddJpg.Location = new System.Drawing.Point(13, 116);
-            this.checkBoxAddJpg.Name = "checkBoxAddJpg";
-            this.checkBoxAddJpg.Size = new System.Drawing.Size(192, 17);
-            this.checkBoxAddJpg.TabIndex = 15;
-            this.checkBoxAddJpg.Text = "Add .jpg if there is no file extension.";
-            this.checkBoxAddJpg.UseVisualStyleBackColor = true;
-            this.checkBoxAddJpg.CheckedChanged += new System.EventHandler(this.checkBoxAddJpg_CheckedChanged);
+            this.checkBoxAddJpgBefore.AutoSize = true;
+            this.checkBoxAddJpgBefore.Location = new System.Drawing.Point(13, 115);
+            this.checkBoxAddJpgBefore.Name = "checkBoxAddJpgBefore";
+            this.checkBoxAddJpgBefore.Size = new System.Drawing.Size(235, 17);
+            this.checkBoxAddJpgBefore.TabIndex = 15;
+            this.checkBoxAddJpgBefore.Text = "Add .jpg to the filename BEFORE download.";
+            this.checkBoxAddJpgBefore.UseVisualStyleBackColor = true;
+            this.checkBoxAddJpgBefore.CheckedChanged += new System.EventHandler(this.checkBoxAddJpg_CheckedChanged);
+            // 
+            // checkBoxAddJpgAfter
+            // 
+            this.checkBoxAddJpgAfter.AutoSize = true;
+            this.checkBoxAddJpgAfter.Location = new System.Drawing.Point(13, 138);
+            this.checkBoxAddJpgAfter.Name = "checkBoxAddJpgAfter";
+            this.checkBoxAddJpgAfter.Size = new System.Drawing.Size(227, 17);
+            this.checkBoxAddJpgAfter.TabIndex = 16;
+            this.checkBoxAddJpgAfter.Text = "Add .jpg to the filename AFTER download.";
+            this.checkBoxAddJpgAfter.UseVisualStyleBackColor = true;
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(704, 367);
-            this.Controls.Add(this.checkBoxAddJpg);
+            this.Controls.Add(this.checkBoxAddJpgAfter);
+            this.Controls.Add(this.checkBoxAddJpgBefore);
             this.Controls.Add(this.checkBoxClearLogs);
             this.Controls.Add(this.progressBar1);
             this.Controls.Add(this.clearLogs);
@@ -243,6 +255,7 @@
 		private System.Windows.Forms.Button clearLogs;
 		private System.Windows.Forms.ProgressBar progressBar1;
 		private System.Windows.Forms.CheckBox checkBoxClearLogs;
-		private System.Windows.Forms.CheckBox checkBoxAddJpg;
-	}
+		private System.Windows.Forms.CheckBox checkBoxAddJpgBefore;
+        private System.Windows.Forms.CheckBox checkBoxAddJpgAfter;
+    }
 }
