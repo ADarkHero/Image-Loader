@@ -48,10 +48,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestCertificateThumbprint>4408678FC61DA9A8001BAE155762EE57BD008FDE</ManifestCertificateThumbprint>
+    <ManifestCertificateThumbprint>0DAA921B016E1D849E751D7FE29AE4463860D626</ManifestCertificateThumbprint>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestKeyFile>ImageLoader_1_TemporaryKey.pfx</ManifestKeyFile>
+    <ManifestKeyFile>ImageLoader_2_TemporaryKey.pfx</ManifestKeyFile>
   </PropertyGroup>
   <PropertyGroup>
     <GenerateManifests>true</GenerateManifests>
@@ -93,6 +93,7 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <None Include="ImageLoader_2_TemporaryKey.pfx" />
     <None Include="ImageLoader_TemporaryKey.pfx" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
